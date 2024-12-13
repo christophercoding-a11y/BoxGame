@@ -73,7 +73,7 @@ class Game {
 
     handleClick(item) {
         item.addEventListener('click', ()=>{
-            console.log(item.style.backgroundColor)
+            // console.log(item.style.backgroundColor)
             this.changeColor(item, this.getRandomColor())
 
             this.getCount()
@@ -84,8 +84,18 @@ class Game {
         const idx = Math.floor(Math.random() * this.colors.length)
 
         const randonColor = this.colors[idx]
-        console.log(randonColor)
+        // console.log(randonColor)
         return randonColor
+    }
+
+    changeColor(el, rand) {
+        el.style.backgroundColor = rand
+    }
+
+    getCount() {
+        this.count++
+
+        this.countDisplay.innerText = this.count
     }
 }
 
