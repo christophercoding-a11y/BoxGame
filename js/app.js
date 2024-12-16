@@ -6,6 +6,7 @@ class Game {
         this.bestScore = document.getElementById('bestScore')
         this.freezeColorDisplay = document.getElementById('freezeColorDisplay')
         this.freezeColor = ''
+        this.hasWon = false
         this.count = 0
         this.colors = [
             'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'brown', 'gray', 'pink',
@@ -68,9 +69,8 @@ class Game {
 
             this.addToGameBoard(this.gameBoard, box)
 
-            if(box.style.backgroundColor != this.freezeColor) {
+            
                 this.changeColor(box, this.boxes)
-            }
         })
     }
 
@@ -86,17 +86,26 @@ class Game {
 
     changeColor(element, arr) {
         element.addEventListener('click', ()=> {
-            this.count++
-            this.countDisplay.innerText = this.count
             // element.style.backgroundColor = this.colors[Math.floor(Math.random()* this.colors.length)]
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].id == element.dataset.id) {
-                    arr[i].color = this.colors[Math.floor(Math.random()* this.colors.length)]
+                    // test freezeColor here
+                    if(this.freezeColor != arr[i].color) {
+                        this.count++
+                        this.countDisplay.innerText = this.count
+                        arr[i].color = this.colors[Math.floor(Math.random()* this.colors.length)]
 
-                    element.style.backgroundColor = arr[i].color
+                        element.style.backgroundColor = arr[i].color
+                    }
                 }
             }
+
+            this.checkWin()
         })
+    }
+
+    checkWin() {
+        console.log(this.hasWon)
     }
 }
 
