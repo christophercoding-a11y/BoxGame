@@ -61,7 +61,7 @@ class Game {
             const box = document.createElement('div')
             box.classList.add('box')
             box.setAttribute('id', `box-${el.id}`)
-            box.setAttribute('dataset')
+            box.dataset.id = el.id
             box.style.backgroundColor = el.color
             box.style.width = '200px'
             box.style.height = '200px'
@@ -69,7 +69,7 @@ class Game {
             this.addToGameBoard(this.gameBoard, box)
 
             if(box.style.backgroundColor != this.freezeColor) {
-                this.changeColor(box)
+                this.changeColor(box, this.boxes)
             }
         })
     }
