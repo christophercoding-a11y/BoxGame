@@ -11,6 +11,8 @@ class Game {
         this.colors = [
             'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'brown', 'gray', 'pink',
         ]
+        this.matches = 0
+        this.matchDisplay = document.getElementById('matchDisplay')
         
         this.boxes = [
             {
@@ -55,6 +57,7 @@ class Game {
     init() {
         this.getFreezeColor()
         this.makeBoxes()
+        this.getMatches()
     }
 
     makeBoxes() {
@@ -68,10 +71,23 @@ class Game {
             box.style.height = '200px'
 
             this.addToGameBoard(this.gameBoard, box)
-
+            this.showMatches()
             
-                this.changeColor(box, this.boxes)
+            this.changeColor(box, this.boxes)
         })
+    }
+
+    getMatches() {
+        for (let i = 0; i < this.boxes.length; i++) {
+            if (this.freezeColor == this.boxes[i].color) {
+                this.matches++
+                this.showMatches()
+            }
+        }
+    }
+
+    showMatches() {
+        this.matchDisplay.innerText = this.matches
     }
 
     addToGameBoard(parent, child) {
@@ -96,16 +112,23 @@ class Game {
                         arr[i].color = this.colors[Math.floor(Math.random()* this.colors.length)]
 
                         element.style.backgroundColor = arr[i].color
+
+                        if (arr[i].color == this.freezeColor) {
+                            this.matches++
+                            this.showMatches()
+                        }
                     }
                 }
             }
-
             this.checkWin()
         })
     }
 
     checkWin() {
-        console.log(this.hasWon)
+        if (this.matches == 9) {
+            this.hasWon = !this.hasWon
+            console.log(this.hasWon)
+        }
     }
 }
 
