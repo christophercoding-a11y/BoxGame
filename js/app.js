@@ -3,6 +3,9 @@ class Game {
     constructor() {
         this.countDisplay = document.getElementById('countDisplay')
         this.gameBoard = document.getElementById('gameBoard')
+        this.bestScore = document.getElementById('bestScore')
+        this.freezeColorDisplay = document.getElementById('freezeColorDisplay')
+        this.freezeColor = ''
         this.count = 0
         this.colors = [
             'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'brown', 'gray', 'pink',
@@ -11,91 +14,89 @@ class Game {
         this.boxes = [
             {
                 id: 1,
-                color: 'red',
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id: 2,
-                color: 'blue'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id: 3,
-                color: 'yellow'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id : 4,
-                color: 'green'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id : 5,
-                color: 'purple'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id : 6,
-                color: 'orange'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id : 7,
-                color: 'brown'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id : 8,
-                color: 'gray'
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
             },
             {
                 id : 9,
-                color: 'pink'
-            },
+                color: this.colors[Math.floor(Math.random() * this.colors.length)]
+            }
         ]
     }
     
     init() {
-        // console.log('initalized')
+        this.getFreezeColor()
         this.makeBoxes()
     }
 
     makeBoxes() {
-        this.boxes.forEach(item => {
+        this.boxes.forEach(el => {
             const box = document.createElement('div')
             box.classList.add('box')
-            box.setAttribute('id', `box-${item.id}`)
-            box.style.backgroundColor = item.color
+            box.setAttribute('id', `box-${el.id}`)
+            box.setAttribute('dataset')
+            box.style.backgroundColor = el.color
             box.style.width = '200px'
             box.style.height = '200px'
 
-            this.placeOnBoard(box)
-            this.handleClick(box)
+            this.addToGameBoard(this.gameBoard, box)
+
+            if(box.style.backgroundColor != this.freezeColor) {
+                this.changeColor(box)
+            }
         })
     }
 
-    placeOnBoard(item) {
-        this.gameBoard.appendChild(item)
+    addToGameBoard(parent, child) {
+        return parent.appendChild(child)
     }
 
-    handleClick(item) {
-        item.addEventListener('click', ()=>{
-            // console.log(item.style.backgroundColor)
-            this.changeColor(item, this.getRandomColor())
+    getFreezeColor() {
+        this.freezeColor = this.colors[Math.floor(Math.random() * this.colors.length)]
 
-            this.getCount()
+        this.freezeColorDisplay.innerText = this.freezeColor
+    }
+
+    changeColor(element, arr) {
+        element.addEventListener('click', ()=> {
+            this.count++
+            this.countDisplay.innerText = this.count
+            // element.style.backgroundColor = this.colors[Math.floor(Math.random()* this.colors.length)]
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].id == element.dataset.id) {
+                    arr[i].color = this.colors[Math.floor(Math.random()* this.colors.length)]
+
+                    element.style.backgroundColor = arr[i].color
+                }
+            }
         })
-    }
-    
-    getRandomColor() {
-        const idx = Math.floor(Math.random() * this.colors.length)
-
-        const randonColor = this.colors[idx]
-        // console.log(randonColor)
-        return randonColor
-    }
-
-    changeColor(el, rand) {
-        el.style.backgroundColor = rand
-    }
-
-    getCount() {
-        this.count++
-
-        this.countDisplay.innerText = this.count
     }
 }
 

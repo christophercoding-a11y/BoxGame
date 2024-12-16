@@ -8,14 +8,26 @@
     <title>Box Game</title>
 </head>
 <body>
-    <header class="header" id="header">
+    <main class="main" id="main">
         <div class="container text-center">
-            <h1 id="count">count:
-                <span id="countDisplay"></span>
-            </h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mx-auto" id="gameBoard"></div>
+                </div>
+                <div class="col-md-4">
+                    <h1 id="count">count:
+                        <span id="countDisplay"></span>
+                    </h1>
+                    <h2 class="text-center">Freeze color:
+                        <span id="freezeColorDisplay"></span>
+                    </h2>
+                    <h3 class="text-center">Best Score:
+                        <span id="bestScore"></span>
+                    </h3>
+                </div>
+            </div>
         </div>
-        <div id="gameBoard"></div>
-    </header>
+    </main>
 
 
 
