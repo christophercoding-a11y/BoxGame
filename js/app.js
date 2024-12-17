@@ -57,7 +57,7 @@ class Game {
 
         this.scores = {
             prevScore: 0,
-            currScore: this.count,
+            currScore: 0,
             bestScore: 0
         }
     }
@@ -117,6 +117,7 @@ class Game {
                     // test freezeColor here
                     if(this.freezeColor != arr[i].color) {
                         this.count++
+                        this.scores.currScore = this.count
                         this.countDisplay.innerText = this.count
                         arr[i].color = this.colors[Math.floor(Math.random()* this.colors.length)]
 
@@ -139,7 +140,7 @@ class Game {
             this.message.innerText = `You win and it took ${this.count} clicks!`
             this.gameBoard.innerHTML = ''
             this.gamePlay = false
-            this.setScore()
+            this.setScores()
         }
     }
 
@@ -154,19 +155,15 @@ class Game {
         this.init()
     }
 
-    setScore() {
-        let bestScore
-        if (this.count < this.scores.bestScore && this.count > 0) {
-            bestScore = this.count
+    setScores() {
+        this.scores.prevScore = this.scores.currScore
+        this.scores.currScore = this.count
+        if (this.scores.count < this.scores.prevScore && this.scores.currScore != 0) {
+            this.scores.bestScore = this.scores.currScore
         } else {
-            bestScore = this.scores.currScore
+            this.scores.bestScore = this.scores.prevScore
         }
-
-        this.scores = {
-            prevScore: this.scores.currScore,
-            currScore: this.count,
-            bestScore: bestScore
-        }
+        
 
         this.bestScore.innerText = this.scores.bestScore
     }
